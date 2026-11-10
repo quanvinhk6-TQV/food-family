@@ -509,85 +509,138 @@ def load_expert_system():
 
 system = load_expert_system()
 
-# --- GIAO DIỆN WEB STREAMLIT ---
-st.set_page_config(page_title="Hệ Thống Chuyên Gia Tư Vấn Món Ăn", page_icon="🍽️", layout="centered")
+# --- CẤU HÌNH GIAO DIỆN RỘNG ---
+st.set_page_config(page_title="Hệ Thống Chuyên Gia Tư Vấn Món Ăn", page_icon="🍽️", layout="wide")
 
-st.title("🍽️ Hệ Thống Chuyên Gia Tư Vấn Món Ăn")
-st.write("Vui lòng chọn các tiêu chí của bạn dưới đây để hệ thống gợi ý món ăn phù hợp:")
-
-# Giao diện chọn tiêu chí
-time_option = st.selectbox(
-    "1. Thời điểm ăn:",
-    options=["T1", "T2", "T3"],
-    format_func=lambda x: {"T1": "T1: Sáng", "T2": "T2: Trưa", "T3": "T3: Tối"}[x]
+# --- THANH MENU ĐIỀU HƯỚNG BÊN TRÁI (GIỐNG ẢNH MẪU) ---
+st.sidebar.title("📌 Danh Mục Hệ Thống")
+menu = st.sidebar.radio(
+    "Chọn chức năng:",
+    ["🤖 Hệ chuyên gia (Tư vấn)", "📖 Hướng dẫn sử dụng", "📞 Liên hệ", "🛡️ Điều khoản sử dụng"]
 )
 
-type_option = st.selectbox(
-    "2. Loại món ăn ưa thích:",
-    options=["L1", "L2", "L3", "L4", "L5", "L6"],
-    format_func=lambda x: {
-        "L1": "L1: Món nước", "L2": "L2: Món khô", "L3": "L3: Món rán", 
-        "L4": "L4: Món luộc", "L5": "L5: Món nướng", "L6": "L6: Món chay"
-    }[x]
-)
+st.sidebar.markdown("---")
+st.sidebar.info("💡 Hệ thống chuyên gia hỗ trợ lựa chọn món ăn gia đình thông minh.")
 
-budget_option = st.selectbox(
-    "3. Ngân sách:",
-    options=["N1", "N2", "N3"],
-    format_func=lambda x: {
-        "N1": "N1: Dưới 30.000đ", "N2": "N2: Từ 30.000đ đến 50.000đ", "N3": "N3: Trên 50.000đ"
-    }[x]
-)
+# --- XỬ LÝ NỘI DUNG TỪNG MỤC MENU ---
+if menu == "🤖 Hệ chuyên gia (Tư vấn)":
+    st.title("🍽️ Hệ Thống Chuyên Gia Tư Vấn Món Ăn Gia Đình")
+    st.write("Vui lòng lựa chọn các tiêu chí của bạn dưới đây để hệ thống gợi ý món ăn phù hợp nhất:")
 
-taste_option = st.selectbox(
-    "4. Khẩu vị:",
-    options=["V1", "V2", "V3", "V4", "V5"],
-    format_func=lambda x: {
-        "V1": "V1: Cay", "V2": "V2: Chua ngọt", "V3": "V3: Đậm đà", 
-        "V4": "V4: Mặn mà", "V5": "V5: Thanh nhẹ"
-    }[x]
-)
+    # Chia cột bố cục cho đẹp
+    col_input, col_result = st.columns([1, 2], gap="large")
 
-prep_option = st.selectbox(
-    "5. Thời gian chuẩn bị:",
-    options=["G1", "G2", "G3"],
-    format_func=lambda x: {
-        "G1": "G1: Dưới 15 phút", "G2": "G2: Từ 15 đến 30 phút", "G3": "G3: Trên 30 phút"
-    }[x]
-)
+    with col_input:
+        st.subheader("🎯 Tiêu chí lựa chọn")
+        time_option = st.selectbox(
+            "1. Thời điểm ăn:",
+            options=["T1", "T2", "T3"],
+            format_func=lambda x: {"T1": "T1: Sáng", "T2": "T2: Trưa", "T3": "T3: Tối"}[x]
+        )
 
-nutrition_option = st.selectbox(
-    "6. Nhu cầu dinh dưỡng:",
-    options=["D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8"],
-    format_func=lambda x: {
-        "D1": "D1: Đủ chất", "D2": "D2: Nhiều rau", "D3": "D3: Giàu đạm", 
-        "D4": "D4: Ăn nhẹ", "D5": "D5: Giảm cân", "D6": "D6: Thể thao", 
-        "D7": "D7: Dành cho trẻ em", "D8": "D8: Dành cho người già"
-    }[x]
-)
+        type_option = st.selectbox(
+            "2. Loại món ăn ưa thích:",
+            options=["L1", "L2", "L3", "L4", "L5", "L6"],
+            format_func=lambda x: {
+                "L1": "L1: Món nước", "L2": "L2: Món khô", "L3": "L3: Món rán", 
+                "L4": "L4: Món luộc", "L5": "L5: Món nướng", "L6": "L6: Món chay"
+            }[x]
+        )
 
-# Nút bấm tìm kiếm
-if st.button("🔍 Tìm Món Ăn Phù Hợp", type="primary"):
-    user_facts = [time_option, type_option, budget_option, taste_option, prep_option, nutrition_option]
+        budget_option = st.selectbox(
+            "3. Ngân sách:",
+            options=["N1", "N2", "N3"],
+            format_func=lambda x: {
+                "N1": "N1: Dưới 30.000đ", "N2": "N2: Từ 30.000đ đến 50.000đ", "N3": "N3: Trên 50.000đ"
+            }[x]
+        )
+
+        taste_option = st.selectbox(
+            "4. Khẩu vị:",
+            options=["V1", "V2", "V3", "V4", "V5"],
+            format_func=lambda x: {
+                "V1": "V1: Cay", "V2": "V2: Chua ngọt", "V3": "V3: Đậm đà", 
+                "V4": "V4: Mặn mà", "V5": "V5: Thanh nhẹ"
+            }[x]
+        )
+
+        prep_option = st.selectbox(
+            "5. Thời gian chuẩn bị:",
+            options=["G1", "G2", "G3"],
+            format_func=lambda x: {
+                "G1": "G1: Dưới 15 phút", "G2": "G2: Từ 15 đến 30 phút", "G3": "G3: Trên 30 phút"
+            }[x]
+        )
+
+        nutrition_option = st.selectbox(
+            "6. Nhu cầu dinh dưỡng:",
+            options=["D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8"],
+            format_func=lambda x: {
+                "D1": "D1: Đủ chất", "D2": "D2: Nhiều rau", "D3": "D3: Giàu đạm", 
+                "D4": "D4: Ăn nhẹ", "D5": "D5: Giảm cân", "D6": "D6: Thể thao", 
+                "D7": "D7: Dành cho trẻ em", "D8": "D8: Dành cho người già"
+            }[x]
+        )
+
+        search_clicked = st.button("🔍 Tìm Món Ăn Phù Hợp", type="primary", use_container_width=True)
+
+    with col_result:
+        st.subheader("✨ Kết quả gợi ý từ hệ thống chuyên gia")
+        
+        if search_clicked:
+            user_facts = [time_option, type_option, budget_option, taste_option, prep_option, nutrition_option]
+            recommendations = system.inference(user_facts)
+            
+            if recommendations:
+                for item in recommendations:
+                    with st.container():
+                        c1, c2 = st.columns([1, 2])
+                        with c1:
+                            if item["image"] and os.path.exists(item["image"]):
+                                st.image(item["image"], caption=item["name"], use_container_width=True)
+                            else:
+                                st.info("Chưa có hình ảnh minh họa")
+                        with c2:
+                            st.success(f"**Món ăn:** {item['name']} (`{item['code']}`)")
+                            st.write(f"**Mô tả:** {item['desc']}")
+                            st.caption("✓ Khớp hoàn hảo với các tiêu chí bạn đã chọn!")
+                        st.markdown("---")
+            else:
+                st.error("Rất tiếc, hệ thống không tìm thấy món ăn nào khớp chính xác với tập tiêu chí này. Hãy thử thay đổi một vài lựa chọn nhé!")
+        else:
+            st.info("👈 Hãy chọn các tiêu chí ở cột bên trái và bấm **'Tìm Món Ăn Phù Hợp'** để xem kết quả!")
+
+elif menu == "📖 Hướng dẫn sử dụng":
+    st.title("📖 Hướng Dẫn Sử Dụng Hệ Thống")
+    st.markdown("""
+    ### Chào mừng bạn đến với Hệ Thống Chuyên Gia Tư Vấn Món Ăn!
+    Hệ thống áp dụng công nghệ suy diễn tiến (Forward Chaining) dựa trên cơ sở tri thức để gợi ý các món ăn phù hợp nhất với nhu cầu của bạn.
     
-    recommendations = system.inference(user_facts)
+    **Các bước thực hiện:**
+    1. Chọn mục **🤖 Hệ chuyên gia (Tư vấn)** ở thanh menu bên trái.
+    2. Lần lượt lựa chọn các tiêu chí theo nhu cầu thực tế:
+       - Thời điểm ăn (Sáng, Trưa, Tối)
+       - Loại món ăn ưa thích (Món nước, Món khô, Món rán, Món luộc, Món nướng, Món chay)
+       - Mức ngân sách dự kiến
+       - Khẩu vị, thời gian chuẩn bị và nhu cầu dinh dưỡng.
+    3. Bấm nút **🔍 Tìm Món Ăn Phù Hợp** để hệ thống truy xuất và hiển thị kết quả chi tiết kèm hình ảnh minh họa.
+    """)
+
+elif menu == "📞 Liên hệ":
+    st.title("📞 Thông Tin Liên Hệ & Hỗ Trợ")
+    st.markdown("""
+    Nếu bạn có bất kỳ câu hỏi, góp ý hoặc cần hỗ trợ về hệ thống, vui lòng liên hệ:
     
-    st.markdown("---")
-    st.subheader("✨ Kết quả gợi ý từ hệ thống chuyên gia:")
-    
-    if recommendations:
-        for item in recommendations:
-            with st.container():
-                col1, col2 = st.columns([1, 2])
-                with col1:
-                    if item["image"] and os.path.exists(item["image"]):
-                        st.image(item["image"], caption=item["name"], use_container_width=True)
-                    else:
-                        st.info("Chưa có hình ảnh minh họa")
-                with col2:
-                    st.success(f"**Món ăn:** {item['name']} (`{item['code']}`)")
-                    st.write(f"**Mô tả:** {item['desc']}")
-                    st.caption("Khớp hoàn hảo với các tiêu chí bạn đã chọn!")
-                st.markdown("---")
-    else:
-        st.error("Rất tiếc, hệ thống không tìm thấy món ăn nào khớp chính xác với tập tiêu chí này. Hãy thử thay đổi một vài lựa chọn nhé!")
+    * **Đơn vị:** Trường Đại học Đồng Tháp (ĐH Đồng Tháp)
+    * **Chuyên ngành:** Sư phạm Tin học
+    * **Tác giả phát triển:** Trần Quang Vinh
+    * **Địa chỉ:** Thành phố Cao Lãnh, Tỉnh Đồng Tháp
+    """)
+
+elif menu == "🛡️ Điều khoản sử dụng":
+    st.title("🛡️ Điều Khoản Sử Dụng")
+    st.markdown("""
+    * **Mục đích:** Hệ thống được xây dựng nhằm phục vụ học tập, nghiên cứu khoa học và phát triển ứng dụng giáo dục.
+    * **Bản quyền:** Toàn bộ cơ sở tri thức, mã nguồn và tài nguyên hình ảnh thuộc quyền sở hữu của tác giả.
+    * **Miễn trừ trách nhiệm:** Các thông tin gợi ý món ăn và dinh dưỡng mang tính chất tham khảo cho việc lập kế hoạch bữa ăn gia đình.
+    """)
