@@ -614,7 +614,6 @@ elif menu == "📖 Hướng dẫn sử dụng":
     st.title("📖 Hướng Dẫn Sử Dụng Hệ Thống")
     st.markdown("""
     ### Chào mừng bạn đến với Hệ Thống Chuyên Gia Tư Vấn Món Ăn!
-    Hệ thống áp dụng công nghệ suy diễn tiến (Forward Chaining) dựa trên cơ sở tri thức để gợi ý các món ăn phù hợp nhất với nhu cầu của bạn.
     
     **Các bước thực hiện:**
     1. Chọn mục **🤖 Hệ chuyên gia (Tư vấn)** ở thanh menu bên trái.
@@ -631,10 +630,10 @@ elif menu == "📞 Liên hệ":
     st.markdown("""
     Nếu bạn có bất kỳ câu hỏi, góp ý hoặc cần hỗ trợ về hệ thống, vui lòng liên hệ:
     
-    * **Đơn vị:** Trường Đại học Đồng Tháp (ĐH Đồng Tháp)
+    * **Đơn vị:** Trường Đại học Đồng Tháp
     * **Chuyên ngành:** Sư phạm Tin học
-    * **Tác giả phát triển:** Trần Quang Vinh
-    * **Địa chỉ:** Thành phố Cao Lãnh, Tỉnh Đồng Tháp
+    * **Tác giả phát triển:** Trần Quang Vinh, Phan Văn Mạnh
+    * **Địa chỉ:** Cao Lãnh, Tỉnh Đồng Tháp
     """)
 
 elif menu == "🛡️ Điều khoản sử dụng":
