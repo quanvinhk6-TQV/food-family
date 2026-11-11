@@ -2,7 +2,7 @@ import streamlit as st
 
 class FoodExpertSystem:
     def __init__(self):
-        # 1. Tập dữ liệu món ăn tích hợp trực tiếp link ảnh online từ GitHub
+
         self.dishes = {
             "K1": {
                 "name": "Cháo thịt bằm",
@@ -181,7 +181,6 @@ class FoodExpertSystem:
             }
         }
 
-        # 2. Tập luật suy diễn (Rule Base)
         self.rules = [
             ({"T1", "L1", "N1", "V5", "G3", "D4"}, "K1"),
             ({"T1", "L1", "N1", "V5", "G3", "D3"}, "K1"),
@@ -496,11 +495,9 @@ system = load_expert_system()
 
 st.set_page_config(page_title="Hệ Thống Chuyên Gia Tư Vấn Món Ăn", page_icon="🍽️", layout="wide")
 
-# Khởi tạo trạng thái điều hướng trang (Trang chủ / Hệ chuyên gia)
 if "page" not in st.session_state:
     st.session_state.page = "home"
 
-# --- GIAO DIỆN TRANG CHỦ ---
 if st.session_state.page == "home":
     st.markdown("<h1 style='text-align: center; color: #ff4b4b;'>🍽️ HỆ THỐNG CHUYÊN GIA TƯ VẤN MÓN ĂN GIA ĐÌNH</h1>", unsafe_allow_html=True)
     st.markdown("<h4 style='text-align: center; color: gray;'>Ứng dụng hỗ trợ chọn món ăn thông minh dựa trên cơ sở tri thức</h4>", unsafe_allow_html=True)
@@ -514,7 +511,6 @@ if st.session_state.page == "home":
             st.session_state.page = "expert"
             st.rerun()
 
-# --- GIAO DIỆN HỆ THỐNG CHÍNH ---
 else:
     # Nút thoát / Quay về trang chủ
     if st.button("🚪 Thoát / Về Trang Chủ", type="secondary"):
