@@ -3,7 +3,7 @@ import os
 
 class FoodExpertSystem:
     def __init__(self):
-        # 1. Tập sự kiện - Danh sách các món ăn kèm mô tả chi tiết
+
         self.dishes = {
             "K1": {
                 "name": "Cháo thịt bằm",
@@ -147,7 +147,6 @@ class FoodExpertSystem:
             }
         }
 
-        # 2. Tập luật suy diễn (Rule Base)
         self.rules = [
             # Cháo thịt bằm (K1)
             ({"T1", "L1", "N1", "V5", "G3", "D4"}, "K1"),
@@ -470,7 +469,6 @@ class FoodExpertSystem:
             ({"T1", "L1", "N3", "V3", "G3", "D3"}, "K35"),
         ]
 
-        # Tự động quét file ảnh tương ứng
         self.dish_images = {}
         for i, code in enumerate(self.dishes.keys(), 1):
             found_img = ""
@@ -512,7 +510,7 @@ system = load_expert_system()
 # --- CẤU HÌNH GIAO DIỆN RỘNG ---
 st.set_page_config(page_title="Hệ Thống Chuyên Gia Tư Vấn Món Ăn", page_icon="🍽️", layout="wide")
 
-# --- THANH MENU ĐIỀU HƯỚNG BÊN TRÁI (GIỐNG ẢNH MẪU) ---
+# --- THANH MENU ĐIỀU HƯỚNG ---
 st.sidebar.title("📌 Danh Mục Hệ Thống")
 menu = st.sidebar.radio(
     "Chọn chức năng:",
@@ -522,12 +520,10 @@ menu = st.sidebar.radio(
 st.sidebar.markdown("---")
 st.sidebar.info("💡 Hệ thống chuyên gia hỗ trợ lựa chọn món ăn gia đình thông minh.")
 
-# --- XỬ LÝ NỘI DUNG TỪNG MỤC MENU ---
 if menu == "🤖 Hệ chuyên gia (Tư vấn)":
     st.title("🍽️ Hệ Thống Chuyên Gia Tư Vấn Món Ăn Gia Đình")
     st.write("Vui lòng lựa chọn các tiêu chí của bạn dưới đây để hệ thống gợi ý món ăn phù hợp nhất:")
 
-    # Chia cột bố cục cho đẹp
     col_input, col_result = st.columns([1, 2], gap="large")
 
     with col_input:
@@ -630,10 +626,8 @@ elif menu == "📞 Liên hệ":
     st.markdown("""
     Nếu bạn có bất kỳ câu hỏi, góp ý hoặc cần hỗ trợ về hệ thống, vui lòng liên hệ:
     
-    * **Đơn vị:** Trường Đại học Đồng Tháp
-    * **Chuyên ngành:** Sư phạm Tin học
-    * **Tác giả phát triển:** Trần Quang Vinh, Phan Văn Mạnh
-    * **Địa chỉ:** Cao Lãnh, Tỉnh Đồng Tháp
+
+    * **Thành viên nhóm:** Trần Quang Vinh, Phan Văn Mạnh
     """)
 
 elif menu == "🛡️ Điều khoản sử dụng":
