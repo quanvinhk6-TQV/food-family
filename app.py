@@ -507,10 +507,8 @@ def load_expert_system():
 
 system = load_expert_system()
 
-# --- CẤU HÌNH GIAO DIỆN RỘNG ---
 st.set_page_config(page_title="Hệ Thống Chuyên Gia Tư Vấn Món Ăn", page_icon="🍽️", layout="wide")
 
-# --- THANH MENU ĐIỀU HƯỚNG ---
 st.sidebar.title("📌 Danh Mục Hệ Thống")
 menu = st.sidebar.radio(
     "Chọn chức năng:",
